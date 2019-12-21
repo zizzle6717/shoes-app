@@ -1,0 +1,50 @@
+{
+  "name": "shoes-app",
+  "version": "1.0.0",
+  "description": "Demo App",
+  "main": "index.js",
+  "scripts": {
+    "build:watch": "webpack --config webpack.config.js",
+    "copy:env": "_bin/copy-env.sh",
+    "generate:docs": "node --require ./node_modules/dotenv/config scripts/generate-docs.js",
+    "init": "npm run copy:env && npm run generate:docs",
+    "lint": "eslint --ext .ts,.js src",
+    "start": "node --require ./node_modules/dotenv/config dist/index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zizzle6717/shoes-app.git"
+  },
+  "author": "Zack Anselm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zizzle6717/shoes-app/issues"
+  },
+  "homepage": "https://github.com/zizzle6717/shoes-app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "swagger-ui-express": "^4.1.2",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.2",
+    "@types/helmet": "0.0.45",
+    "@types/jasmine": "^3.5.0",
+    "@types/node": "^12.12.21",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "eslint": "^6.7.2",
+    "husky": "^3.1.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
