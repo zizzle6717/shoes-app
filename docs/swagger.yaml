@@ -6,3 +6,122 @@ info:
 
 servers:
   - url: ${SERVICE_HOST}/v1
+
+paths:
+  /products:
+    get:
+      summary: Get Products
+      tags:
+        - products
+      description: Returns a list of products
+      responses:
+        '200':
+          description: A list of results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '500':
+          description: Failed to fetch products.
+  /products/{productId}/reviews:
+    post:
+      summary: Create Review
+      tags:
+        - reviews
+      description: Creates a new review
+      parameters:
+        - $ref: '#/components/parameters/productId'
+      requestBody:
+        $ref: '#/components/requestBodies/ReviewBody'
+      responses:
+        '200':
+          description: The new reviewId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 57
+        '500':
+          description: 'Failed to save review.'
+
+#-------------------------------
+# Components
+#-------------------------------
+components:
+  parameters:
+    productId:
+      name: productId
+      in: path
+      description: the product id
+      required: true
+      schema:
+        type: integer
+        example: 52
+  requestBodies:
+    ReviewBody:
+      description: object containing review information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReviewRequestBody'
+  schemas:
+    #-------------------------------
+    # Schema Request Body Objects
+    #-------------------------------
+    ReviewRequestBody:
+      type: object
+      properties:
+        trueToSizeScore:
+          type: integer
+          description: integer between 1 and 5
+          example: 4
+    #-------------------------------
+    # Schema Objects
+    #-------------------------------
+    Product:
+      properties:
+        id:
+          type: integer
+          description: unique id of the product
+          example: 99
+        brand:
+          type: string
+          example: 'Adidas'
+        createdAt:
+          type: string
+          description: the time at which the product was created/started
+          example: 2019-12-22T12:59:17.052Z
+        updatedAt:
+          type: string
+          description: the time at which the product was last updated
+          example: 2019-12-22T15:15:57.052Z
+    Review:
+      properties:
+        id:
+          type: integer
+          description: unique id of the review
+          example: 99
+        productId:
+          type: integer
+          description: id of the associated product
+          example: 68
+        trueToSizeScore:
+          type: integer
+          description: integer between 1 and 5
+          example: 4
+        createdAt:
+          type: string
+          description: the time at which the review was created/started
+          example: 2019-12-22T12:59:17.052Z
+        updatedAt:
+          type: string
+          description: the time at which the review was last updated
+          example: 2019-12-22T15:15:57.052Z

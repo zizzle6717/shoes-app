@@ -45,7 +45,7 @@ describe('Routes', () => {
         .get(`${baseUrl}/products`)
         .expect(500);
 
-      expect(response.body.message).to.be.equal('Failed to fetch product(s).');
+      expect(response.body.message).to.be.equal('Failed to fetch products.');
       expect(response.body.error).to.be.equal(mockErrorMsg);
     });
 

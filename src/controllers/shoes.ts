@@ -9,7 +9,7 @@ export const getShoes = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).send({
-      message: 'Failed to fetch shoe(s).',
+      message: 'Failed to fetch shoes.',
       error: err.message,
     });
   }

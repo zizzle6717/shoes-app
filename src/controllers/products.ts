@@ -9,7 +9,7 @@ export const getProducts = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).send({
-      message: 'Failed to fetch product(s).',
+      message: 'Failed to fetch products.',
       error: err.message,
     });
   }
@@ -42,9 +42,14 @@ export const getProduct = (req, res) => {
         });
       }
 
+      const trueToSizeCalculation = reviewsRes.rows
+        .map((row) => Number(row.trueToSizeScore))
+        .reduce((cur, acc) => cur + acc, 0) / reviewsRes.rows.length;
+
       const product = productRes.rows[0];
       product.shoe = shoesRes.rows[0];
       product.reviews = reviewsRes.rows;
+      product.trueToSizeCalculation = trueToSizeCalculation;
 
       return res.send(product);
     })

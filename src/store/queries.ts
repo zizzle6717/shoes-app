@@ -34,3 +34,8 @@ export const getReviewsQuery = (conditions = {}) => knex.select([
   .from(tableNames.REVIEWS)
   .where(conditions)
   .toString();
+
+export const createReviewQuery = (review) => knex.insert(review)
+  .into(tableNames.REVIEWS)
+  .returning('id')
+  .toString();
