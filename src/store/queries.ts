@@ -1,8 +1,7 @@
 import Knex from 'knex';
+import tableNames from '../constants/tableNames';
 
 const knex = Knex({ client: 'pg' });
-const PRODUCTS_TABLE = 'products';
-const SHOES_TABLE = 'shoes';
 
 export const getProductsQuery = (conditions = {}) => {
   return knex.select([
@@ -11,7 +10,7 @@ export const getProductsQuery = (conditions = {}) => {
     'createdAt',
     'updatedAt',
   ])
-    .from(PRODUCTS_TABLE)
+    .from(tableNames.PRODUCTS)
     .where(conditions)
     .toString();
 };
@@ -24,7 +23,20 @@ export const getShoesQuery = (conditions = {}) => {
     'createdAt',
     'updatedAt',
   ])
-    .from(SHOES_TABLE)
+    .from(tableNames.SHOES)
+    .where(conditions)
+    .toString();
+};
+
+export const getReviewsQuery = (conditions = {}) => {
+  return knex.select([
+    'id',
+    'productId',
+    'trueToSizeScore',
+    'createdAt',
+    'updatedAt',
+  ])
+    .from(tableNames.REVIEWS)
     .where(conditions)
     .toString();
 };

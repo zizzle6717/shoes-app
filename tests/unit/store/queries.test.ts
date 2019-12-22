@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import {
   getProductsQuery,
   getShoesQuery,
+  getReviewsQuery,
 } from '../../../src/store/queries';
 
 describe('Queries', () => {
@@ -25,9 +26,9 @@ describe('Queries', () => {
 
   describe('getShoes()', () => {
     it('should return a postgresql query to select shoes from db', () => {
-      const expected = `select "id", "productId", "name", "createdAt", "updatedAt" from "shoes" where "id" = 2`;
+      const expected = `select "id", "productId", "name", "createdAt", "updatedAt" from "shoes" where "productId" = 2`;
       const actual = getShoesQuery({
-        id: 2,
+        productId: 2,
       });
       expect(actual).to.equal(expected);
     });
@@ -35,6 +36,22 @@ describe('Queries', () => {
     it('should return a postgresql query to select shoes from db when conditions are undefind', () => {
       const expected = `select "id", "productId", "name", "createdAt", "updatedAt" from "shoes"`;
       const actual = getShoesQuery();
+      expect(actual).to.equal(expected);
+    });
+  });
+
+  describe('getReviews()', () => {
+    it('should return a postgresql query to select reviews from db', () => {
+      const expected = `select "id", "productId", "trueToSizeScore", "createdAt", "updatedAt" from "reviews" where "productId" = 2`;
+      const actual = getReviewsQuery({
+        productId: 2,
+      });
+      expect(actual).to.equal(expected);
+    });
+
+    it('should return a postgresql query to select reviews from db when conditions are undefind', () => {
+      const expected = `select "id", "productId", "trueToSizeScore", "createdAt", "updatedAt" from "reviews"`;
+      const actual = getReviewsQuery();
       expect(actual).to.equal(expected);
     });
   });

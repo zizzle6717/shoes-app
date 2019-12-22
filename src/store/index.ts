@@ -2,6 +2,7 @@ import db from './db';
 import {
   getProductsQuery,
   getShoesQuery,
+  getReviewsQuery,
 } from './queries';
 
 class Store {
@@ -17,6 +18,10 @@ class Store {
 
   getShoes = (conditions) => {
     return this.db.read.query(getShoesQuery(conditions))
+  }
+
+  getReviews = (conditions) => {
+    return this.db.read.query(getReviewsQuery(conditions))
   }
 }
 

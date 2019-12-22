@@ -22,8 +22,11 @@ Demo App
 ## Documentation
 Swagger documentation can be found by visiting `http://localhost:7000/docs/`. Replace with the port from you local environment variables.
 
+## Test Coverage
+Coverage can be found by visiting `http://localhost:7000/coverage/`
+
 ## Healthcheck endpoint
-`http://localhost:7000/_healthz`
+Use this endpoint to check that the service is running `http://localhost:7000/_healthz`
 
 ## Monitoring
 Real-time metrics can be found by visiting `http://localhost:7000/appmetrics-dash/`
