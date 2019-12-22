@@ -1,10 +1,12 @@
 import express from 'express';
 import {
-  createShoeReview,
+  getShoe,
+  getShoes,
 } from '../controllers/shoes';
 
 const router = express.Router();
 
-router.get('/reviews/:reviewId', createShoeReview);
+router.get('', getShoes);
+router.get('/:shoeId', getShoe);
 
 export default router;
