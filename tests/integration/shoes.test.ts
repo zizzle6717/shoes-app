@@ -2,6 +2,7 @@ import { expect, should } from 'chai';
 import sinon from 'sinon';
 import supertest from 'supertest';
 import app from '../../src/app';
+import store from '../../src/store';
 
 const baseUrl = '/v1';
 should();
@@ -10,9 +11,7 @@ describe('Routes', () => {
   let server;
   let request;
 
-  const teardown = () => {
-    return;
-  };
+  const teardown = () => undefined;
 
   before(async () => {
     await teardown();
@@ -39,23 +38,57 @@ describe('Routes', () => {
   });
 
   describe('GET /shoes', () => {
+    it('should handle errors', async () => {
+      const mockErrorMsg = 'Mock error message';
+      sinon.stub(store, 'getShoes').rejects(new Error(mockErrorMsg));
+      const response = await request
+        .get(`${baseUrl}/shoes`)
+        .expect(500);
+
+      expect(response.body.message).to.be.equal('Failed to fetch shoe(s).');
+      expect(response.body.error).to.be.equal(mockErrorMsg);
+    });
+
     it('should return a list of shoes', async () => {
       const response = await request
         .get(`${baseUrl}/shoes`)
         .expect(200);
-      
+
       expect(response.body.shoes.length).to.be.equal(2);
     });
   });
 
   describe('GET /shoes/:shoeId', () => {
+    it('should handle errors', async () => {
+      const mockShoeId = 5;
+      const mockErrorMsg = 'Mock error message';
+      sinon.stub(store, 'getShoes').rejects(new Error(mockErrorMsg));
+      const response = await request
+        .get(`${baseUrl}/shoes/${mockShoeId}`)
+        .expect(500);
+
+      expect(response.body.message).to.be.equal('Failed to fetch shoe.');
+      expect(response.body.error).to.be.equal(mockErrorMsg);
+    });
+
+    it('should handle NotFound', async () => {
+      const mockShoeId = 5;
+      const response = await request
+        .get(`${baseUrl}/shoes/${mockShoeId}`)
+        .expect(404);
+
+      expect(response.body.message).to.be.equal('Shoe not found.');
+      expect(response.body.statusCode).to.be.equal(404);
+    });
+
     it('should return a shoe', async () => {
       const mockShoeId = 1;
       const response = await request
         .get(`${baseUrl}/shoes/${mockShoeId}`)
         .expect(200);
-      
+
       expect(response.body.id).to.be.equal(mockShoeId);
+      expect(response.body.reviews.length).to.be.equal(0);
     });
   });
 });

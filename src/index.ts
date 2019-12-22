@@ -5,7 +5,7 @@ import app from './app';
 let devServer;
 
 if (!process.env.PORT) {
-  console.log('Missing ENV varaibles...Exiting!')
+  console.log('Missing ENV varaibles...Exiting!');
   process.exit(1);
 }
 
@@ -14,7 +14,7 @@ if (!process.env.NODE_ENV) {
 }
 
 // Run npm start <custom-port>
-const PORT: number = process.env.NODE_ENV === 'development' && parseInt(process.argv[2], 10)
+const PORT: number = (process.env.NODE_ENV === 'development' && parseInt(process.argv[2], 10))
   || parseInt(process.env.PORT, 10);
 
 // Start server
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV !== 'development') {
   https.createServer(options, app).listen(PORT);
 } else {
   devServer = app.listen(process.env.PORT, () => {
-    console.info(`server started on ${PORT}`)
+    console.info(`server started on ${PORT}`);
   });
 }
 

@@ -12,17 +12,11 @@ class Store {
     this.db = conn;
   }
 
-  getProducts = (conditions) => {
-    return this.db.read.query(getProductsQuery(conditions))
-  }
+  getProducts = (conditions) => this.db.read.query(getProductsQuery(conditions))
 
-  getShoes = (conditions) => {
-    return this.db.read.query(getShoesQuery(conditions))
-  }
+  getShoes = (conditions) => this.db.read.query(getShoesQuery(conditions))
 
-  getReviews = (conditions) => {
-    return this.db.read.query(getReviewsQuery(conditions))
-  }
+  getReviews = (conditions) => this.db.read.query(getReviewsQuery(conditions))
 }
 
 export default new Store(db);

@@ -6,4 +6,4 @@ export default {
   PRODUCTS,
   SHOES,
   REVIEWS,
-}
+};

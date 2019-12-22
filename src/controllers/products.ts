@@ -1,12 +1,19 @@
 import store from '../store';
 
 export const getProducts = async (req, res) => {
-  const response = await store.getProducts({});
+  try {
+    const response = await store.getProducts({});
 
-  return res.send({
-    products: response.rows,
-  });
-}
+    return res.send({
+      products: response.rows,
+    });
+  } catch (err) {
+    return res.status(500).send({
+      message: 'Failed to fetch product(s).',
+      error: err.message,
+    });
+  }
+};
 
 export const getProduct = (req, res) => {
   const { productId } = req.params;
@@ -14,7 +21,7 @@ export const getProduct = (req, res) => {
 
   const getProductsPromise = store.getProducts({
     id: productId,
-  })
+  });
 
   const getShoesPromise = store.getShoes({
     productId,
@@ -31,7 +38,7 @@ export const getProduct = (req, res) => {
       if (!productRes.rows.length) {
         return res.status(404).send({
           statusCode: 404,
-          message: 'Product not found.'
+          message: 'Product not found.',
         });
       }
 
@@ -41,8 +48,8 @@ export const getProduct = (req, res) => {
 
       return res.send(product);
     })
-    .catch(err => res.status(500).send({
+    .catch((err) => res.status(500).send({
       message: 'Failed to fetch product.',
       error: err.message,
     }));
-}
+};
