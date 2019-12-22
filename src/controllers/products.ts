@@ -3,7 +3,9 @@ import store from '../store';
 export const getProducts = async (req, res) => {
   const response = await store.getProducts({});
 
-  return res.send(response.rows);
+  return res.send({
+    products: response.rows,
+  });
 }
 
 export const getProduct = async (req, res) => {

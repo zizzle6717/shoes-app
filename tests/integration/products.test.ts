@@ -38,21 +38,21 @@ describe('Routes', () => {
     });
   });
 
-  describe('GET /shoes', () => {
-    it('should return a list of shoes', async () => {
+  describe('GET /products', () => {
+    it('should return a list of products', async () => {
       const response = await request
-        .get(`${baseUrl}/shoes`)
+        .get(`${baseUrl}/products`)
         .expect(200);
       
-      expect(response.body.shoes.length).to.be.equal(2);
+      expect(response.body.products.length).to.be.equal(2);
     });
   });
 
-  describe('GET /shoes/:shoeId', () => {
-    it('should return a shoe', async () => {
+  describe('GET /products/:productId', () => {
+    it('should return a product', async () => {
       const mockShoeId = 1;
       const response = await request
-        .get(`${baseUrl}/shoes/${mockShoeId}`)
+        .get(`${baseUrl}/products/${mockShoeId}`)
         .expect(200);
       
       expect(response.body.id).to.be.equal(mockShoeId);
