@@ -1,4 +1,6 @@
 import store from '../store';
+import Cache from '../store/Cache';
+import calculateTts from '../utilities/calculateTts';
 
 export const getShoes = async (req, res) => {
   try {
@@ -31,10 +33,22 @@ export const getShoe = (req, res) => {
 
       return store.getReviews({
         productId: shoe.productId,
-      }).then((reviewRes) => {
-        shoe.reviews = reviewRes.rows;
+      }).then((reviewsRes) => {
+        shoe.reviews = reviewsRes.rows.map((row) => ({ id: row.id, trueToSizeScore: row.trueToSizeScore }));
 
-        return res.send(shoe);
+        let trueToSizeCalculation;
+        return Cache.getTrueToSizeCalculation(shoe.productId)
+          .then((ttsCalc) => {
+            trueToSizeCalculation = ttsCalc;
+
+            if (!trueToSizeCalculation) {
+              trueToSizeCalculation = calculateTts(reviewsRes.rows);
+            }
+
+            shoe.trueToSizeCalculation = trueToSizeCalculation;
+
+            return res.send(shoe);
+          });
       });
     })
     .catch((err) => {

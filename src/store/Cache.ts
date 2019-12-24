@@ -1,5 +1,6 @@
 import redisClient from './redisClient';
 import convertObjectToArray from '../utilities/convertObjectToArray';
+import calculateTts from '../utilities/calculateTts';
 
 const getObject = async ({
   key,
@@ -23,13 +24,12 @@ const setObject = async ({
   await redisClient.hset(key, ...keyValues);
 };
 
-// TODO: For scalability, reviews should be stored in a Redis list and keyed to each object
 class Cache {
   static getProduct = async (productId) => {
     if (productId) {
       await getObject({
         key: `products:${productId}`,
-        parseArray: ['shoes', 'reviews'],
+        parseArray: [],
       });
     }
   }
@@ -38,7 +38,7 @@ class Cache {
     await setObject({
       key: `products:${productId}`,
       data: product,
-      stringifyArray: ['shoes', 'reviews'],
+      stringifyArray: [],
     });
   }
 
@@ -46,7 +46,7 @@ class Cache {
     if (shoeId) {
       await getObject({
         key: `shoes:${shoeId}`,
-        parseArray: ['reviews'],
+        parseArray: [],
       });
     }
   }
@@ -55,8 +55,26 @@ class Cache {
     await setObject({
       key: `shoes:${shoeId}`,
       data: shoe,
-      stringifyArray: ['reviews'],
+      stringifyArray: [],
     });
+  }
+
+  static getReviews = async (productId) => {
+    const reviews = await redisClient.smembers(`products:${productId}:reviews`);
+    return reviews.map((review) => JSON.parse(review));
+  }
+
+  static setReviews = async (productId, reviews) => {
+    const existingReviews = await Cache.getReviews(productId);
+    const trueToSizeCalculation = calculateTts([...existingReviews, ...reviews]);
+    await redisClient.set(`products:${productId}:trueToSizeCalculation`, trueToSizeCalculation);
+    const stringifiedReviews = reviews.map((review) => JSON.stringify(review));
+    await redisClient.sadd(`products:${productId}:reviews`, ...stringifiedReviews);
+  }
+
+  static getTrueToSizeCalculation = async (productId) => {
+    const ttsCalc = await redisClient.get(`products:${productId}:trueToSizeCalculation`);
+    return ttsCalc;
   }
 }
 

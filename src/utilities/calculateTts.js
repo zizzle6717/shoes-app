@@ -1,0 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = (reviews) => reviews
+    .map((review) => Number(review.trueToSizeScore))
+    .reduce((cur, acc) => cur + acc, 0) / reviews.length;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2FsY3VsYXRlVHRzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiY2FsY3VsYXRlVHRzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsa0JBQWUsQ0FBQyxPQUFPLEVBQUUsRUFBRSxDQUFDLE9BQU87S0FDaEMsR0FBRyxDQUFDLENBQUMsTUFBTSxFQUFFLEVBQUUsQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLGVBQWUsQ0FBQyxDQUFDO0tBQy9DLE1BQU0sQ0FBQyxDQUFDLEdBQUcsRUFBRSxHQUFHLEVBQUUsRUFBRSxDQUFDLEdBQUcsR0FBRyxHQUFHLEVBQUUsQ0FBQyxDQUFDLEdBQUcsT0FBTyxDQUFDLE1BQU0sQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IChyZXZpZXdzKSA9PiByZXZpZXdzXG4gIC5tYXAoKHJldmlldykgPT4gTnVtYmVyKHJldmlldy50cnVlVG9TaXplU2NvcmUpKVxuICAucmVkdWNlKChjdXIsIGFjYykgPT4gY3VyICsgYWNjLCAwKSAvIHJldmlld3MubGVuZ3RoO1xuIl19

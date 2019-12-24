@@ -10,10 +10,18 @@ export const createReview = async (req, res) => {
   };
 
   try {
-    const response = await store.createReview(review);
+    const productRes = await store.getProducts({ id: productId });
+    if (!productRes.rows.length) {
+      return res.status(404).send({
+        statusCode: 404,
+        message: 'Product not found.',
+      });
+    }
+
+    const reviewRes = await store.createReview(review);
 
     return res.status(201).send({
-      id: response.rows[0].id,
+      id: reviewRes.rows[0].id,
     });
   } catch (err) {
     return res.status(500).send({
