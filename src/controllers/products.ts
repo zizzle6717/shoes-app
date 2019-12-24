@@ -47,8 +47,13 @@ export const getProduct = (req, res) => {
         .reduce((cur, acc) => cur + acc, 0) / reviewsRes.rows.length;
 
       const product = productRes.rows[0];
-      product.shoe = shoesRes.rows[0];
-      product.reviews = reviewsRes.rows;
+      product.shoe = shoesRes.rows[0]
+        ? {
+          id: shoesRes.rows[0].id,
+          name: shoesRes.rows[0].name,
+        }
+        : {};
+      product.reviews = reviewsRes.rows.map((row) => ({ id: row.id, trueToSizeScore: row.trueToSizeScore }));
       product.trueToSizeCalculation = trueToSizeCalculation;
 
       return res.send(product);

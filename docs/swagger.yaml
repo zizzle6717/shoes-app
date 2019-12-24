@@ -28,6 +28,24 @@ paths:
                       $ref: '#/components/schemas/Product'
         '500':
           description: Failed to fetch products.
+  /products/{productId}:
+    get:
+      summary: Get Product
+      tags:
+        - products
+      description: Returns a product
+      parameters:
+        - $ref: '#/components/parameters/productId'
+      responses:
+        '200':
+          description: A product with details
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Product'
+        '500':
+          description: Failed to fetch products.
   /products/{productId}/reviews:
     post:
       summary: Create Review
@@ -51,6 +69,44 @@ paths:
                     example: 57
         '500':
           description: 'Failed to save review.'
+  /shoes:
+    get:
+      summary: Get Shoes
+      tags:
+        - shoes
+      description: Returns a list of shoes
+      responses:
+        '200':
+          description: A list of results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shoes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Shoe'
+        '500':
+          description: Failed to fetch shoes.
+  /shoes/{shoeId}:
+    get:
+      summary: Get Shoe
+      tags:
+        - shoes
+      description: Returns a shoe
+      parameters:
+        - $ref: '#/components/parameters/shoeId'
+      responses:
+        '200':
+          description: A shoe with details
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Shoe'
+        '500':
+          description: Failed to fetch shoes.
 
 #-------------------------------
 # Components
@@ -65,6 +121,14 @@ components:
       schema:
         type: integer
         example: 52
+    shoeId:
+      name: shoeId
+      in: path
+      description: the shoe id
+      required: true
+      schema:
+        type: integer
+        example: 23
   requestBodies:
     ReviewBody:
       description: object containing review information
@@ -102,6 +166,27 @@ components:
         updatedAt:
           type: string
           description: the time at which the product was last updated
+          example: 2019-12-22T15:15:57.052Z
+    Shoe:
+      properties:
+        id:
+          type: integer
+          description: unique id of the shoe
+          example: 88
+        productId:
+          type: integer
+          description: id of the associated product
+          example: 1
+        name:
+          type: string
+          example: 'Air'
+        createdAt:
+          type: string
+          description: the time at which the shoe was created/started
+          example: 2019-12-22T12:59:17.052Z
+        updatedAt:
+          type: string
+          description: the time at which the shoe was last updated
           example: 2019-12-22T15:15:57.052Z
     Review:
       properties:

@@ -88,7 +88,6 @@ describe('Routes', () => {
         .expect(200);
 
       expect(response.body.id).to.be.equal(mockProductId);
-      expect(response.body.shoe.productId).to.be.equal(mockProductId);
       expect(response.body.reviews.length).to.be.equal(0);
     });
   });
