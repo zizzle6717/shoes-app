@@ -5,7 +5,7 @@ export const createReview = async (req, res) => {
   const { trueToSizeScore } = req.body;
 
   const review = {
-    productId,
+    productId: Number(productId),
     trueToSizeScore,
   };
 

@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import supertest from 'supertest';
 import app from '../../src/app';
 import store from '../../src/store';
+import Cache from '../../src/store/Cache';
 
 const baseUrl = '/v1';
 should();
@@ -22,19 +23,10 @@ describe('Routes', () => {
 
   after(async () => {
     server.close();
-    await teardown();
   });
 
   afterEach(() => {
     sinon.restore();
-  });
-
-  describe('GET /_healthz', () => {
-    it('should have a health check endpoint', async () => {
-      await request
-        .get('/_healthz')
-        .expect(200);
-    });
   });
 
   describe('GET /shoes', () => {
@@ -88,7 +80,20 @@ describe('Routes', () => {
         .expect(200);
 
       expect(response.body.id).to.be.equal(mockShoeId);
-      expect(response.body.reviews.length).to.be.equal(0);
+      expect(response.body.reviews.length).to.be.equal(1);
+
+      // Cache shoe for next test
+      await Cache.setShoe(response.body.id, response.body);
+    });
+
+    it('uses cached copy of shoe when available', async () => {
+      const mockShoeId = 1;
+      const response = await request
+        .get(`${baseUrl}/shoes/${mockShoeId}`)
+        .expect(200);
+
+      expect(response.body.id).to.be.equal(mockShoeId);
+      expect(response.body.reviews.length).to.be.equal(1);
     });
   });
 });

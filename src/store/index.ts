@@ -16,16 +16,16 @@ class Store {
 
   getProducts = async (conditions) => {
     let product;
-    if (conditions.productId) {
-      product = await Cache.getProduct(conditions.productId);
+    if (conditions.id) {
+      product = await Cache.getProduct(conditions.id);
     }
-    return product ? { rows: [product] } : this.db.read.query(getProductsQuery(conditions));
+    return product ? Promise.resolve({ rows: [product] }) : this.db.read.query(getProductsQuery(conditions));
   }
 
   getShoes = async (conditions) => {
     let shoe;
-    if (conditions.shoeId) {
-      shoe = await Cache.getShoe(conditions.shoeId);
+    if (conditions.id) {
+      shoe = await Cache.getShoe(conditions.id);
     }
     return shoe ? { rows: [shoe] } : this.db.read.query(getShoesQuery(conditions));
   }

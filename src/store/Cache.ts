@@ -26,12 +26,18 @@ const setObject = async ({
 
 class Cache {
   static getProduct = async (productId) => {
+    let product;
     if (productId) {
-      await getObject({
+      product = await getObject({
         key: `products:${productId}`,
         parseArray: [],
       });
     }
+    if (product) {
+      product.id = Number(product.id);
+      product.trueToSizeCalculation = Number(product.trueToSizeCalculation);
+    }
+    return product;
   }
 
   static setProduct = async (productId, product) => {
@@ -43,12 +49,18 @@ class Cache {
   }
 
   static getShoe = async (shoeId) => {
+    let shoe;
     if (shoeId) {
-      await getObject({
+      shoe = await getObject({
         key: `shoes:${shoeId}`,
         parseArray: [],
       });
     }
+    if (shoe) {
+      shoe.id = Number(shoe.id);
+      shoe.productId = Number(shoe.productId);
+    }
+    return shoe;
   }
 
   static setShoe = async (shoeId, shoe) => {

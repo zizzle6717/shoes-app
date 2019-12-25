@@ -2,7 +2,10 @@ import { expect, should } from 'chai';
 import sinon from 'sinon';
 import supertest from 'supertest';
 import app from '../../src/app';
+import db from '../../src/store/db';
 import store from '../../src/store';
+import redisClient from '../../src/store/redisClient';
+import Cache from '../../src/store/Cache';
 
 const baseUrl = '/v1';
 should();
@@ -11,11 +14,15 @@ describe('Routes', () => {
   let server;
   let request;
 
-  const teardown = () => undefined;
+  // Reset data to initial seed after running all integration tests
+  const teardown = async () => {
+    await db.write.query('DELETE from products WHERE id != 1 AND id != 2');
+    await db.write.query('DELETE from shoes WHERE id != 1 AND id != 2');
+    await db.write.query('DELETE from reviews');
+    await redisClient.flushall();
+  };
 
   before(async () => {
-    await teardown();
-
     server = app.listen();
     request = supertest.agent(server);
   });
@@ -88,7 +95,20 @@ describe('Routes', () => {
         .expect(200);
 
       expect(response.body.id).to.be.equal(mockProductId);
-      expect(response.body.reviews.length).to.be.equal(0);
+      expect(response.body.reviews.length).to.be.equal(1);
+
+      // Cache product for next test
+      await Cache.setProduct(response.body.id, response.body);
+    });
+
+    it('uses cached copy of product when available', async () => {
+      const mockProductId = 1;
+      const response = await request
+        .get(`${baseUrl}/products/${mockProductId}`)
+        .expect(200);
+
+      expect(response.body.id).to.be.equal(mockProductId);
+      expect(response.body.reviews.length).to.be.equal(1);
     });
   });
 });
