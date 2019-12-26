@@ -6,7 +6,7 @@ export const getProducts = async (req, res) => {
   try {
     const response = await store.getProducts({});
 
-    return res.send({
+    return res.status(200).send({
       products: response.rows,
     });
   } catch (err) {

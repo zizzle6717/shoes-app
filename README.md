@@ -1,7 +1,8 @@
 # shoes-app
-Demo App
+This is a demo microservice with products, shoes, and reviews for sample data.
 
-## Getting Started (Dev Environment)
+## Getting Started
+### Dev Environment w/ Docker
 
 1. Install Docker [https://www.docker.com/products/container-runtime]
 2. Clone the Repo [https://github.com/zizzle6717/shoes-app.git]
@@ -19,6 +20,9 @@ Demo App
 7. If running postgres/redis with docker, you setup should look like...
 ![Terminal Setup](https://github.com/zizzle6717/shoes-app/blob/master/docs/dev-terminal.png)
 
+### Dev Environment w/ Kubernetes & Skaffold
+TODO
+
 ## Documentation
 Swagger documentation can be found by visiting `http://localhost:7000/docs/`. Replace with the port from you local environment variables.
 
@@ -30,3 +34,11 @@ Use this endpoint to check that the service is running `http://localhost:7000/_h
 
 ## Monitoring
 Real-time metrics can be found by visiting `http://localhost:7000/appmetrics-dash/`
+
+## Logging
+Logging can be configured by setting the appropriate environment variables in the `.env` file.
+To view logs locally in the console, set `LOGGING_HOST=console` and set the log level such as `LOGGING_LEVEL=info`.
+For production or logging with a pre-production instance, `LOGGING_HOST` should be the elastic search client node.
+
+## Deployment (w/ TravisCI, Docker, and Kubernetes)
+TODO

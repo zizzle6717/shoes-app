@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import yaml from 'yamljs';
+import logger from './middleware/logger';
 import { version as packageVersion } from '../package.json';
 import routes from './routes';
 
@@ -21,7 +22,7 @@ app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-// TODO: Add logging middleware
+app.use(logger);
 
 // Routes
 app.use('/docs/generated/swagger.yaml', express.static('docs/generated/swagger.yaml'));
