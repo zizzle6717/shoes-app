@@ -1,4 +1,6 @@
 # shoes-app
+[![Build Status](https://travis-ci.org/zizzle6717/shoes-app.svg?branch=master)](https://travis-ci.org/zizzle6717/shoes-app)
+
 This is a demo microservice with products, shoes, and reviews for sample data.
 
 ## Getting Started
