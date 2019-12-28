@@ -17,8 +17,9 @@ This is a demo microservice with products, shoes, and reviews for sample data.
     1. `npm run init` (This will generate documentations and populate the database with tables and a few records)
     2. `npm run build:watch` (watches files for changes and hot module reloads)
     3. In yet another terminal run `npm start`
-7. If running postgres/redis with docker, you setup should look like...
+7. If running postgres/redis with docker, your setup might look like this...
 ![Terminal Setup](https://github.com/zizzle6717/shoes-app/blob/master/docs/dev-terminal.png)
+Hot module reloading is configured to restart the app each time a file change is saved.
 
 ### Dev Environment w/ Kubernetes & Skaffold
 TODO
@@ -40,5 +41,6 @@ Logging can be configured by setting the appropriate environment variables in th
 To view logs locally in the console, set `LOGGING_HOST=console` and set the log level such as `LOGGING_LEVEL=info`.
 For production or logging with a pre-production instance, `LOGGING_HOST` should be the elastic search client node.
 
-## Deployment (w/ TravisCI, Docker, and Kubernetes)
-TODO
+## Build Pipeline and Deployment (w/ TravisCI, Docker, and Kubernetes)
+Github is configured to build and test each time changes are committed and pushed.
+Modify the included `.travis.yml` to reconfigure.

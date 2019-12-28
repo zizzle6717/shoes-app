@@ -1,0 +1,11 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t rilizack/shoes-app -f ./Dockerfile .
+script:
+  - docker run -e CI=true rilizack/shoes-app npm run test:unit
+branches:
+  only:
+  - master
