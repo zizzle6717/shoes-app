@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shoes-deployment
+spec:
+  selector:
+    matchLabels:
+      app: shoesBackend
+  template:
+    metadata:
+      labels:
+        app: shoesBackend
+    spec:
+      containers:
+      - name: shoes
+        image: rilizack/shoes-app
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "2000m"
+        ports:
+        - containerPort: 7000
+        env:
+        - name: DB_DATABASE
+          value: "shoesApp"
+        - name: DB_HOST_READ
+          value: "postgres-cluster-ip-service"
+        - name: DB_HOST_WRITE
+          value: "postgres-cluster-ip-service"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dbpassword
+              key: DB_PASSWORD
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: "postgres"
+        - name: DOMAIN
+          value: "shoes-app.com"
+        - name: LOGGING_HOST
+          value: "console"
+        - name: LOGGING_LEVEL
+          value: "info"
+        - name: PORT
+          value: "7000"
+        - name: REDIS_HOST
+          value: "redis-cluster-ip-service"
+        - name: REDIS_PORT
+          value: "6379"

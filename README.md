@@ -24,7 +24,11 @@ This is a demo microservice with products, shoes, and reviews for sample data.
 Hot module reloading is configured to restart the app each time a file change is saved.
 
 ### Dev Environment w/ Kubernetes & Skaffold
-TODO
+Assuming you have kubectl installed on your local machine along with minikube or docker-desktop, run the following to commands...
+1. Apply the mandatory ingress-nginx config. `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml` (https://kubernetes.github.io/ingress-nginx/deploy/#prerequisite-generic-deployment-command)
+2. Apply the config files from `/k8s` with `kubectl apply -f k8s`
+
+TODO: Configure Skaffold
 
 ## Documentation
 Swagger documentation can be found by visiting `http://localhost:7000/docs/`. Replace with the port from you local environment variables.

@@ -1,6 +1,9 @@
 sudo: required
 services:
   - docker
+env:
+  global:
+    - GIT_SHA=$(git rev-parse HEAD)
 before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t rilizack/shoes-app -f ./Dockerfile .
@@ -9,3 +12,8 @@ script:
 branches:
   only:
   - master
+deploy:
+  provider: script
+  script: bash ./_bin/travis/deploy.sh
+  on:
+    branch: master

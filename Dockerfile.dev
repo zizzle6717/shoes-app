@@ -6,8 +6,9 @@ ENV NODE_ENV $NODE_ENV
 WORKDIR /app
 COPY ./package*.json ./
 # Install dev dependencies to allow building with webpack
-RUN  npm ci --only=production --no-optional && npm i --only=development --no-optional
+RUN npm ci --no-optional
+RUN npm list webpack
 COPY . .
-RUN npm run generate:docs && \
+RUN npm run generate:docs k8s && \
   npm run build
 CMD ["npm", "run", "start"]

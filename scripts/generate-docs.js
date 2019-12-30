@@ -10,10 +10,10 @@ if (!process.env.NODE_ENV) {
 const env = process.env.NODE_ENV;
 let host;
 
-if (env === 'development') {
+if (env === 'development' && process.argv[2] !== 'k8s') {
   host = `http://localhost:${process.env.PORT}`;
 } else {
-  host = `https://${process.env.DOMAIN}`;
+  host = `${process.env.DOMAIN}`;
 }
 
 const generatedYaml = swaggerYaml.replace('${SERVICE_HOST}', host); // eslint-disable-line no-template-curly-in-string
