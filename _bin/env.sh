@@ -1,0 +1,4 @@
+#!/bin/bash
+
+NODE_VERSION="12.2.0"
+NPM_VERSION="6.10.0"
